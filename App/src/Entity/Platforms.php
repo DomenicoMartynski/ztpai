@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\GenresRepository;
+use App\Repository\PlatformsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: GenresRepository::class)]
-class Genres
+#[ORM\Entity(repositoryClass: PlatformsRepository::class)]
+class Platforms
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,12 +16,12 @@ class Genres
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $genre_name = null;
+    private ?string $platform_name = null;
 
     /**
      * @var Collection<int, Games>
      */
-    #[ORM\ManyToMany(targetEntity: Games::class, mappedBy: 'GameGenres')]
+    #[ORM\ManyToMany(targetEntity: Games::class, mappedBy: 'GamePlatforms')]
     private Collection $games;
 
     public function __construct()
@@ -34,14 +34,14 @@ class Genres
         return $this->id;
     }
 
-    public function getGenreName(): ?string
+    public function getPlatformName(): ?string
     {
-        return $this->genre_name;
+        return $this->platform_name;
     }
 
-    public function setGenreName(string $genre_name): static
+    public function setPlatformName(string $platform_name): static
     {
-        $this->genre_name = $genre_name;
+        $this->platform_name = $platform_name;
 
         return $this;
     }
@@ -58,7 +58,7 @@ class Genres
     {
         if (!$this->games->contains($game)) {
             $this->games->add($game);
-            $game->addGameGenre($this);
+            $game->addGamePlatform($this);
         }
 
         return $this;
@@ -67,7 +67,7 @@ class Genres
     public function removeGame(Games $game): static
     {
         if ($this->games->removeElement($game)) {
-            $game->removeGameGenre($this);
+            $game->removeGamePlatform($this);
         }
 
         return $this;

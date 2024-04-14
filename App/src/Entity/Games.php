@@ -22,21 +22,35 @@ class Games
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $release_date = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $game_cover = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     /**
-     * @var Collection<int, GameGenres>
+     * @var Collection<int, Genres>
      */
-    #[ORM\ManyToMany(targetEntity: GameGenres::class, mappedBy: 'ID_game')]
-    private Collection $gameGenres;
+    #[ORM\ManyToMany(targetEntity: Genres::class, inversedBy: 'games')]
+    private Collection $GameGenres;
+
+    /**
+     * @var Collection<int, Platforms>
+     */
+    #[ORM\ManyToMany(targetEntity: Platforms::class, inversedBy: 'games')]
+    private Collection $GamePlatforms;
+
+    /**
+     * @var Collection<int, Reviews>
+     */
+    #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'ReviewedGame')]
+    private Collection $reviews;
 
     public function __construct()
     {
-        $this->gameGenres = new ArrayCollection();
+        $this->GameGenres = new ArrayCollection();
+        $this->GamePlatforms = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,7 +87,7 @@ class Games
         return $this->game_cover;
     }
 
-    public function setGameCover(string $game_cover): static
+    public function setGameCover(?string $game_cover): static
     {
         $this->game_cover = $game_cover;
 
@@ -93,27 +107,78 @@ class Games
     }
 
     /**
-     * @return Collection<int, GameGenres>
+     * @return Collection<int, Genres>
      */
     public function getGameGenres(): Collection
     {
-        return $this->gameGenres;
+        return $this->GameGenres;
     }
 
-    public function addGameGenre(GameGenres $gameGenre): static
+    public function addGameGenre(Genres $gameGenre): static
     {
-        if (!$this->gameGenres->contains($gameGenre)) {
-            $this->gameGenres->add($gameGenre);
-            $gameGenre->addIDGame($this);
+        if (!$this->GameGenres->contains($gameGenre)) {
+            $this->GameGenres->add($gameGenre);
         }
 
         return $this;
     }
 
-    public function removeGameGenre(GameGenres $gameGenre): static
+    public function removeGameGenre(Genres $gameGenre): static
     {
-        if ($this->gameGenres->removeElement($gameGenre)) {
-            $gameGenre->removeIDGame($this);
+        $this->GameGenres->removeElement($gameGenre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Platforms>
+     */
+    public function getGamePlatforms(): Collection
+    {
+        return $this->GamePlatforms;
+    }
+
+    public function addGamePlatform(Platforms $gamePlatform): static
+    {
+        if (!$this->GamePlatforms->contains($gamePlatform)) {
+            $this->GamePlatforms->add($gamePlatform);
+        }
+
+        return $this;
+    }
+
+    public function removeGamePlatform(Platforms $gamePlatform): static
+    {
+        $this->GamePlatforms->removeElement($gamePlatform);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reviews>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Reviews $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setReviewedGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Reviews $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getReviewedGame() === $this) {
+                $review->setReviewedGame(null);
+            }
         }
 
         return $this;
