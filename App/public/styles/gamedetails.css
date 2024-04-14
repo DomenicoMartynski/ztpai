@@ -1,0 +1,283 @@
+
+.game-details{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content:center;
+}
+.game-details h2{
+    margin-top:0;
+    font-size: 50px;
+}
+.game-image{
+    
+    box-shadow: 0.3em 0.3em 0.15em rgba(0,0,0,0.25);
+}
+.details{ 
+    align-items: center;
+    text-align: center;
+    justify-content:center;
+    background-color: #6B6B6B;
+    border-radius: 1em;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    height: 60vh;
+    width: 50vw;
+}
+.details-top{
+    height: 80%;
+    justify-content: left;
+    align-items:start;
+    text-align: center;
+}
+.top-left{
+    float: left;
+    margin-top: 1em;
+    margin-left: 1em;
+    display: flex;
+    width: 40%;
+    height: 100%;
+}
+.top-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    margin-left: 45%;
+    overflow: scroll;
+}
+.top-right::-webkit-scrollbar {
+    width: 0em;
+  }
+.top-right::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+.top-right p{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    font-size: 1.25em;
+    margin:0em;
+}
+.top-right h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:#990B0B;
+    text-shadow: 0.075em 0.05em 0.025em rgba(0,0,0,0.15);
+}
+.platform{
+    margin: 0.5em;
+    padding: 0.5em;
+    border: 1px solid white;
+    border-radius: 0.5em;
+    align-items: normal;
+    float:left;
+}
+.image{
+    width:100%;
+    height: 100%;
+}
+.name{
+    width: 100%;
+    margin-top: 5%;
+}
+.name h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:white;
+    text-align: center;
+}
+
+.details-down {
+    justify-content: center;
+    width:80%;
+}
+.details-down h1{
+    text-align: left;
+}
+
+.decorative-line{
+    height: 0.5px; 
+    width: 100%;
+    background-color: white;
+}
+.description {
+    color: white;
+    text-align: left;
+    margin-top:2em;
+    margin-bottom:2em;
+    justify-content: left;
+}
+.reviews{
+    margin-top:2em;
+    width: 100%;
+    height: 15vh;
+    background-color: #6B6B6B;
+    border-radius: 1em;
+}
+.user_display{
+    aspect-ratio : 1 / 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    float: left;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    height: 70%;
+    width: auto;
+}
+.profile-picture{
+    aspect-ratio : 1 / 1;
+    border-radius: 50%;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+.user_display p{
+    width: 100%;
+}
+.my_display{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    float: left;
+    margin-left: 0.5em;
+    width: 20%;
+    height: 100%;
+}
+
+.my-pic{
+    aspect-ratio : 1 / 1;
+    margin-top: 10%;
+    border-radius: 50%;
+    width:80%;
+    display: flex;
+}
+.reviews_content{
+    flex-direction: column;
+    text-align: left;
+    margin-top: 1em;
+    line-height: 1em;
+    margin-left :10%;
+    height: 100%;
+    color: white;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: scroll;
+}
+.reviews_content::-webkit-scrollbar {
+    width: 0em;
+  }
+.reviews_content::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+#score{
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    font-size: 2em;
+}
+
+.your_review{
+    background-color:#6B6B6B ;
+    width: 100%;
+    height: 50vh;
+    border-radius: 1em;
+}
+.review_details{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 1em;
+    margin-left :20vw;
+    height: 100%;
+    color: white;
+    text-align: left;
+}
+.rating{
+    margin-top: 2.5%;
+}
+.review_content{
+    height:70%;
+    width :90%;
+    
+}
+#review_comment{
+    text-align: left;
+    font-size: 1em;
+    height: 90%;
+    width: 100%;
+}
+.leave_a_review{
+    text-align: left;
+    font-size: 1em;
+    height:90%;
+    width: 100%;
+}
+.button{
+    text-align: right;
+    width: 90%;
+}
+#button{
+    font-size: 1.5em;
+    color: white;
+    background-color: #4A0000;
+    width:9em;
+    height: 2em;
+}
+#button:hover{
+    font-weight: bold;
+}
+i{
+    color: gold;
+}
+
+
+header i{
+    color: white;
+}
+
+
+
+
+
+@media only screen and (max-width: 1072px) {
+    .game-details{
+        width:100vw;
+    }
+    .details {
+      height: 110vw;
+      width: 95vw;
+    }
+    .top-right{
+        justify-content: normal;
+    }
+    .top-right p{
+        font-size: 0.9em;
+    }
+    .top-right h1{
+        font-size: 1.25em;
+    }
+    .details-down{
+        width:95vw;
+    }
+    .game-platform{
+        width:100%;
+    }
+    .game-genres{
+        width:100%;
+    }
+    .platform{
+        float: none;
+    }
+    #score{
+        margin-top: 2.5%;
+        font-size: 1.5em;
+    }
+    .user_display{
+        margin-right: 2em;
+    }
+  }

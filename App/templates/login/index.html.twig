@@ -1,20 +1,37 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
 
-{% block title %}Hello RegisterController!{% endblock %}
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/style.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kameron"/>
+        <title>GameCritic - Login</title>
+</head>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<body>
+    
+    <div class="login-body">
+        <div class="logo-container">
+            <div class="logo">
+                <img src=" {{asset('img/logo.svg') }}">
+            </div>
+        </div>
+        <div class="login-container">
+            <div class="login-form">
+                <form class="login" action="login" method="POST">
+                    <input name="email" type="text" id="email" placeholder="Email">
+                    <input name="password" type="password" id ="password" placeholder="password">
+                    <div class="form-button">
+                        <a href="{{ path('app_index') }}">
+                        <button>LOGIN</button>
+                        </a>
+                    </div>
+                </form>
+                <p>Dont have an account? <a href="register">Register here</a></p>
+            <div class="message">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/LoginController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/login/index.html.twig</code></li>
-    </ul>
-</div>
-{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
