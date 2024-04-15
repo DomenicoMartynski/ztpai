@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gamecritic - Search{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/style.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/gamedetails.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/category.css') }}">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kameron"/>
+{% endblock %}
+
+{% block javascripts %}
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kameron"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <script src="https://kit.fontawesome.com/723297a893.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/clickabledivs.js') }}" defer></script>
+{% endblock %}
+{% block body %}
+<main class="category">
+    <div class="base-container">
+        <div class="details-down">
+            <div class="search-bar">
+                <input id='search-bar' type="text" placeholder="search game library" oninput="searchGames()">
+            </div>
+            <div class="decorative-line"></div>
+        </div>
+        <div class="category-list">    
+            <a href = "{{path('app_gamedetails') }}">
+            <div class="list-content">
+                <div class="list-content-top">
+                <div class="list-content-image">
+                    <img src="{{asset('img/stock.jpg') }}">
+                </div>
+                <div class="game-info">
+                    <div class="game-platform">
+                        <div class="listings">
+                            <h1>Platforms</h1> 
+                        </div>
+                            <div class="platform">
+                                <p>Stock Platform 1</p>
+                            </div>
+                            <div class="platform">
+                                <p>Stock Platform 2</p>
+                            </div>
+                            <p>& More</p>
+                        </div>
+                    <div class="game-genres">
+                        <div class="listings">
+                            <h1>Genres</h1> 
+                        </div>
+                            <div class="platform">
+                                <p>Stock Genre 1</p>
+                            </div>
+                            <div class="platform">
+                                <p>Stock Genre 2</p>
+                            </div>
+                            <p>& More</p>
+                    </div>
+                </div>
+                </div>
+                <div class="game-name">
+                    <h2>Template Game</h2>
+                </div>
+            </div>
+        </a>
+        <a href = "{{path('app_gamedetails') }}">
+            <div class="list-content">
+                <div class="list-content-top">
+                <div class="list-content-image">
+                    <img src="{{asset('img/stock.jpg') }}">
+                </div>
+                <div class="game-info">
+                    <div class="game-platform">
+                        <div class="listings">
+                            <h1>Platforms</h1> 
+                        </div>
+                            <div class="platform">
+                                <p>Stock Platform 1</p>
+                            </div>
+                            <div class="platform">
+                                <p>Stock Platform 2</p>
+                            </div>
+                            <p>& More</p>
+                        </div>
+                    <div class="game-genres">
+                        <div class="listings">
+                            <h1>Genres</h1> 
+                        </div>
+                            <div class="platform">
+                                <p>Stock Genre 1</p>
+                            </div>
+                            <div class="platform">
+                                <p>Stock Genre 2</p>
+                            </div>
+                            <p>& More</p>
+                    </div>
+                </div>
+                </div>
+                <div class="game-name">
+                    <h2>Template Game</h2>
+                </div>
+            </div>
+        </a>
+        </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

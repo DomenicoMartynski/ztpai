@@ -27,6 +27,7 @@
                     <div class="slider-wrapper">
                         <button id="prev-slide" class="slide-button material-symbols-rounded">chevron_left</button>
                         <div class="game-list"> 
+                        <a href = "{{path('app_gamedetails') }}">
                             <div class="list-content">
                                 <div class="list-content-top">
                                 <div class="list-content-image">
@@ -62,11 +63,8 @@
                                 <div class="game-name">
                                     <h2>Template Game</h2>
                                 </div>
-                                <form id ="game-form" action="displayGameDetails", method="get">
-                                    <input type="hidden" id="game_id" name="gameID" value="<?php echo $game->getID(); ?>">
-                                </form>
                             </div>
-                        <?php endforeach; ?>
+                        </a>
                         </div>
                     <button id="next-slide" class="slide-button material-symbols-rounded">chevron_right</button>
                     </div>
@@ -84,6 +82,7 @@
                     <div class="slider-wrapper2">
                         <button id="prev-slide" class="slide-button material-symbols-rounded">chevron_left</button>
                         <div class="game-list"> 
+                        <a href = "{{path('app_gamedetails') }}">
                             <div class="list-content">
                                 <div class="list-content-top">
                                 <div class="list-content-image">
@@ -119,11 +118,8 @@
                                 <div class="game-name">
                                     <h2>Template Game</h2>
                                 </div>
-                                <form id ="game-form" action="displayGameDetails", method="get">
-                                    <input type="hidden" id="game_id" name="gameID" value="<?php echo $game->getID(); ?>">
-                                </form>
                             </div>
-                        <?php endforeach; ?>
+                        </a>
                         </div>
                     <button id="next-slide" class="slide-button material-symbols-rounded">chevron_right</button>
                     </div>
@@ -140,7 +136,8 @@
                 <div class="carousel-container3">
                     <div class="slider-wrapper3">
                         <button id="prev-slide" class="slide-button material-symbols-rounded">chevron_left</button>
-                                                <div class="game-list"> 
+                        <div class="game-list"> 
+                        <a href = "{{path('app_gamedetails') }}">
                             <div class="list-content">
                                 <div class="list-content-top">
                                 <div class="list-content-image">
@@ -176,11 +173,8 @@
                                 <div class="game-name">
                                     <h2>Template Game</h2>
                                 </div>
-                                <form id ="game-form" action="displayGameDetails", method="get">
-                                    <input type="hidden" id="game_id" name="gameID" value="<?php echo $game->getID(); ?>">
-                                </form>
                             </div>
-                        <?php endforeach; ?>
+                        </a>
                         </div>
                     <button id="next-slide" class="slide-button material-symbols-rounded">chevron_right</button>
                     </div>

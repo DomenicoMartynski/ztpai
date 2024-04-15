@@ -7,7 +7,7 @@
         {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('styles/navbar.css')}}"/>
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kameron"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         {% endblock %}
 
         {% block javascripts %}
@@ -28,32 +28,32 @@
         <nav class="navbar">
     
         <ul class="nav-links">
-            <li><a href="/allgames"><i class="fas fa-search"></i></a>
-            <li><a href="/category?platform=pc">PC</a></li>
+            <li><a href="{{ path('app_search') }}"><i class="fas fa-search"></i></a>
+            <li><a href="{{ path('app_category') }}">PC</a></li>
             <li><a>Playstation</a>
             <ul>
-                <li><a href="/category?platform=playstation3">Playstation 3</a></li>
-                <li><a href="/category?platform=playstation4">Playstation 4</a></li>
-                <li><a href="/category?platform=playstation5">Playstation 5</a></li>
-                <li><a href="/category?platform=psvitanpsp">VITA AND PSP</a></li>
+                <li><a href="{{ path('app_category') }}">Playstation 3</a></li>
+                <li><a href="{{ path('app_category') }}">Playstation 4</a></li>
+                <li><a href="{{ path('app_category') }}">Playstation 5</a></li>
+                <li><a href="{{ path('app_category') }}">VITA AND PSP</a></li>
             </ul>
             </li>
             <li><a>Xbox</a>
             <ul>
-                <li><a href="/category?platform=xboxone">XBOX ONE</a></li>
-                <li><a href="/category?platform=xboxseries">XBOX SERIES</a></li>
-                <li><a href="/category?platform=xbox360">XBOX 360</a></li>
+                <li><a href="{{ path('app_category') }}">XBOX ONE</a></li>
+                <li><a href="{{ path('app_category') }}">XBOX SERIES</a></li>
+                <li><a href="{{ path('app_category') }}">XBOX 360</a></li>
             </ul>
             </li>
             <li><a>Nintendo</a>
             <ul>
-                <li><a href="/category?platform=nswitch">NINTENDO SWITCH</a></li>
-                <li><a href="/category?platform=3ds">3DS</a></li>
-                <li><a href="/category?platform=ds">DS</a></li>
-                <li><a href="/category?platform=gameboy">N64</a></li>
-                <li><a href="/category?platform=gameboy">GAMEBOY</a></li>
-                <li><a href="/category?platform=snes">SNES</a></li>
-                <li><a href="/category?platform=nes">NES</a></li>
+                <li><a href="{{ path('app_category') }}">NINTENDO SWITCH</a></li>
+                <li><a href="{{ path('app_category') }}">3DS</a></li>
+                <li><a href="{{ path('app_category') }}">DS</a></li>
+                <li><a href="{{ path('app_category') }}">N64</a></li>
+                <li><a href="{{ path('app_category') }}">GAMEBOY</a></li>
+                <li><a href="{{ path('app_category') }}">SNES</a></li>
+                <li><a href="{{ path('app_category') }}">NES</a></li>
             </ul>
             </li>
         </nav>

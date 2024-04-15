@@ -44,7 +44,6 @@
     text-align: left;
 }
 #game-platforms{
-    min-height: 5%;
     max-height: 15%;
     width: 100%;
     display: grid;
@@ -73,11 +72,10 @@
 .platform-div p{
     margin:0px;
     width: 80%;
-    height: 100%;
 }
+
 #game-categories{
     padding: 2.5%;
-    min-height: 5%;
     max-height: 15%;
     width: 100%;
     display: grid;
@@ -138,12 +136,12 @@
     #game-platforms{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        font-size: 0.75em;
+        font-size: 1.25em;
     }
     #game-categories{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        font-size: 0.75em;
+        font-size: 1.25em;
     }
     .details{
         height: 100vh;

@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gamecritic - add game{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/style.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/gamedetails.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/profile.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('styles/add_games.css') }}">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kameron"/>
+{% endblock %}
+
+{% block javascripts %}
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kameron"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <script src="https://kit.fontawesome.com/723297a893.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ asset('js/clickabledivs.js') }}" defer></script>
+{% endblock %}
+{% block body %}
+
+<main>
+        <div class="game-details">
+            
+            <div class="details">
+                <div class='message'>
+                    <h1></h1>
+                </div>
+
+                <div class="user-info-down">
+                    <div class="form">
+                        <form action="addGame" method="POST" enctype="multipart/form-data">
+                            <h1>Name</h1>
+                            <input name="game_name" type="text" id="game_name" placeholder="Game name" required>
+                            <h1>Release date</h1>
+                            <input name="game_date" type="date" id="game_date" placeholder="Release date" required>
+                            <h1>Description</h1>
+                            <textarea name="game_description" id="game_description" placeholder="Game description" required></textarea>
+                            <h1>Available on:</h1>
+                            <div id="game-platforms">
+                                <div class="platform-div">
+                                    <input type="checkbox" class="platform" value="Template Platform 1" name="platforms">
+                                    <p>Template Platform 1</p>
+                                </div>
+                                <div class="platform-div">
+                                    <input type="checkbox" class="platform" value="Template Platform 2" name="platforms">
+                                    <p>Template Platform 2</p>
+                                </div>
+                            </div>
+                            <h1>Categories:</h1>
+                            <div id="game-categories">
+                                <div class="platform-div">
+                                    <input type="checkbox" class="platform" value="<? echo $genre ?>" name="genres">
+                                    <p>Template Genre 1</p>
+                                </div>
+                                <div class="platform-div">
+                                    <input type="checkbox" class="platform" value="<? echo $genre ?>" name="genres">
+                                    <p>Template Genre 2</p>
+                                </div>
+                            </div>
+                            <div id="game-add-bottom">
+                                <div id="game-add-bottom-text">
+                                    <h1>Image:</h1>
+                                </div>
+                                <div id="game-add-bottom-input">   
+                                    <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png" required>
+                                </div>
+                                <div id="game-add-bottom-button">
+                                    <button type="submit">Save</button>
+                                </div>
+                            </div> 
+                        </form>      
+                    </div>         
+                </div>
+            </div>
+        </div>
+    
+</main>
+
+{% endblock %}
