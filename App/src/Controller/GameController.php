@@ -8,12 +8,14 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class GameController extends AbstractController
 {
-    #[Route('/add_game', name: 'app_addgame')]
+    #[Route('/add_game', methods: ['GET'])]
     public function add_game(): Response
     {
-        return $this->render('game/add_game.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
+        $test = new Users();
+        $test->setEmail('email');
+        $test->setPassword('password');
+        $jsonData = json_encode($test);
+        return  $jsonData;
     }
     #[Route('/gamedetails', name: 'app_gamedetails')]
     public function gamedetails(): Response
@@ -36,4 +38,5 @@ class GameController extends AbstractController
             'controller_name' => 'GameController',
         ]);
     }
+
 }
