@@ -1,0 +1,82 @@
+<div class="register-body">
+    <div class="logo-container">
+        <div class="logo">
+            <img src="assets/img/logo.svg">
+        </div>
+    </div>
+    <div class="message">
+        <br>
+    </div>   
+
+    <h2> {{data}}</h2>
+    <div class="dual-container">
+        <div class="register-info"> 
+        <h1>Account Registration</h1>
+        <p> Get Started with a Gamecritic</p>
+        <p>account to rate and review games! </p><br>
+        <p><strong>have an account?</strong></p>
+        <div class="form-button">
+            <a routerLink = "/login"><button id="LogInButton"> Log In</button></a>
+        </div>
+        </div> 
+        <div class="register-form-container"> 
+            <div class="register-form">
+                    <form class="login" [formGroup]="registerForm">
+                        <div class="formElement">
+                            <input formControlName="username" type="text" placeholder="username">
+                            @if (submitted && form['username'].errors) {
+                                <div class="invalid-feedback d-block">
+                                    @if (form['username'].errors['required']) {
+                                        <div><p>Username is required</p></div>
+                                    }
+                                </div>
+                            }
+                        </div>
+            
+                        <div class="formElement">
+                            <input formControlName="email" type="text" placeholder="email@email.com">
+                            @if (submitted && form['email'].errors) {
+                                <div class="invalid-feedback d-block">
+                                    @if (form['email'].errors['required']) {
+                                        <div><p>Email is required</p></div>
+                                    } @if (form['email'].errors['pattern']) {
+                                        <div><p>Email is invalid</p></div>
+                                    }
+                                </div>
+                            }
+                        </div>
+            
+                        <div class="formElement">
+                            <input formControlName="password" type="password" placeholder="password">
+                            @if (submitted && form['password'].errors) {
+                                <div class="invalid-feedback d-block">
+                                    @if (form['password'].errors['required']) {
+                                        <div><p>Password is required</p></div>
+                                    } @if (form['password'].errors['minlength']) {
+                                        <div><p>Password must be at least 4 characters</p></div>
+                                    } @if (form['password'].errors['maxlength']) {
+                                        <div><p>Password must not exceed 40 characters</p></div>
+                                    }
+                                </div>
+                            }
+                        </div>
+            
+                        <div class="formElement">
+                            <input formControlName="confirmPassword" type="password" placeholder="confirm password">
+                            @if (submitted && form['confirmPassword'].errors) {
+                                <div class="invalid-feedback d-block">
+                                    @if (form['confirmPassword'].errors['required']) {
+                                        <div><p>Confirm Password is required</p></div>
+                                    } @if (form['confirmPassword'].errors['matching']) {
+                                        <div><p>Confirm Password does not match</p></div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    <div class="form-button">
+                    <button type="submit" (click)="submitForm()">Register</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>

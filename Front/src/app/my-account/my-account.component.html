@@ -1,0 +1,53 @@
+<main>
+    <div class="game-details">
+        <div class="details">
+            <div class="user-info-top">  
+                    <div class="my-picture">
+                        <img class="profile-picture" src="assets/img/profile.png">
+                    </div>  
+            <h1>Template User</h1>
+            </div>        
+            <form action="changeProfilePicture" method="POST" enctype="multipart/form-data">     
+            <div class="user-info-down">
+                <div class="form">
+                    <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png" required>            
+                    <input type="hidden" id="username" name="username" value="tbd">
+                </div>
+                <div class="form-button">
+                    <button type="submit">Upload</button> 
+                </div>
+            </div>
+            </form>
+            <div class="admin-div">
+                <div class="form-button">
+                <a routerLink="/addgame">
+                    <button type="submit">Add Game</button> 
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="details-down">
+        <h1>Your Reviews</h1>
+        <div class="decorative-line"></div>
+        <div class="reviews">
+            <div class="user_display">
+                <img class="profile-picture" src="assets/img/profile.png">
+                <p>Template User</p>
+            </div>
+            <div class="review-right">
+            <div class="reviews_content"> 
+                <p id="score">5/5<i class="fas fa-star"></i> on <strong>Template Game</strong>
+                <p id="comment">Template Comment</p>
+            </div>
+            <div class="delete">
+            <form class ="delete-form" action="deleteReview" method="POST">
+                    <input type="hidden" id="user_id" name="user_id" value="<? echo $myDetails->getId() ?>">
+                    <input type="hidden" id="game_id" name="game_id" value="<? echo $review->getGameID() ?>"> 
+                <div class="form-button"> <button type="submit"><i class="fas fa-trash"></i></button> </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>   
+        </main>

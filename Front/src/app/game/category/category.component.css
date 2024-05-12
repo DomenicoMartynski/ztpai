@@ -1,0 +1,94 @@
+
+main{
+    width:65vw;
+}
+.no-listings{
+    text-align: center;
+}
+.game-platform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.listings h1{
+    margin-top:1em;
+}
+.game-genres{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.category::-webkit-scrollbar{
+    width: 0em;
+}
+.base-container{
+    width: 100%;
+    height: 100%;
+    align-items: normal;
+}
+.platform{
+    align-items: center;
+    width: 80%;
+    margin:0;
+    padding:0;
+}
+.category-list {
+    width: 100%;
+    height: 25vh;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vw;
+    font-size: 1em;
+    list-style: none;
+    margin-bottom: 30px;
+    overflow-x: clip;
+    scrollbar-width: none;
+  }
+.list-content{
+    width:100%;
+    height: 25vh;
+}
+.category-list::-webkit-scrollbar {
+    width: 0em;
+}
+.details-down{
+    width:100%;
+    margin-bottom: 5vh;
+}
+.details-down h1{
+    font-size:50px;
+    font-weight:bolder;
+}
+
+.categor-list::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+@media only screen and (max-width: 1023px){
+    .details-down h1{
+        text-align: center;
+    }
+    .listings h1{
+        font-size: 1.5em;
+    }
+    .category-list {
+        width: 95vw;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 10vw;
+        margin-bottom: 15px;
+        scroll-snap-type: x mandatory;
+      }
+    .list-content {
+        width:100%;
+        height: 100vw;
+        background-color:#6B6B6B;
+        border-radius:1em;
+      }
+    main {
+        width:95vw;
+    }
+    .category {
+        width: 95vw;
+    }
+}

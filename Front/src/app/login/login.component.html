@@ -1,0 +1,47 @@
+<div class="login-body">
+    <div class="logo-container">
+        <div class="logo">
+            <img src="assets/img/logo.svg">
+        </div>
+    </div>
+    <div class="login-container">
+        <div class="login-form">
+            <form class="login" [formGroup]="loginForm">
+                <div class="formElement">
+                    <input formControlName="email" type="text" placeholder="email@email.com">
+                    @if (submitted && form['email'].errors) {
+                        <div class="invalid-feedback d-block">
+                            @if (form['email'].errors['required']) {
+                                <div><p>Email is required</p></div>
+                            } @if (form['email'].errors['pattern']) {
+                                <div><p>Email is invalid</p></div>
+                            }
+                        </div>
+                    }
+                </div>
+    
+                <div class="formElement">
+                    <input formControlName="password" type="password" placeholder="password">
+                    @if (submitted && form['password'].errors) {
+                        <div class="invalid-feedback d-block">
+                            @if (form['password'].errors['required']) {
+                                <div><p>Password is required</p></div>
+                            } @if (form['password'].errors['minlength']) {
+                                <div><p>Password must be at least 4 characters</p></div>
+                            } @if (form['password'].errors['maxlength']) {
+                                <div><p>Password must not exceed 40 characters</p></div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="form-button">
+                    <button type="submit" (click)="submitForm()">Login</button>
+                </div>
+            </form>
+            <p>Dont have an account? <a routerLink ="/register">Register here</a></p>
+            <div><h2>{{data}}</h2></div>
+        <div class="message">
+        </div>
+    </div>
+</div>
