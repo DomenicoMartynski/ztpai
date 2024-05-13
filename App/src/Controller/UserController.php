@@ -7,13 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Users;
+use App\Entity\User;
 use App\Entity\UserProfile;
-use App\Repository\UsersRepository;
+use App\Repository\UserRepository;
 
 class UserController extends AbstractController
 {
-    public function __construct(UsersRepository $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -40,7 +40,7 @@ class UserController extends AbstractController
         // $testProfile = new UserProfile();
         // $testProfile->setUsername('Nig');
         // $testProfile->setProfilePicture('ger.png');
-        // $test = new Users();
+        // $test = new User();
         // $test->setEmail('email');
     // $test->setPassword('password');
         // $test->setUserProfile($testProfile);
@@ -50,7 +50,7 @@ class UserController extends AbstractController
         
 
         //tak ogarniasz wyciaganie z bazy danych do jsona
-        // public function __construct(UsersRepository $userRepository)
+        // public function __construct(UserRepository $userRepository)
         // {
         //     $this->userRepository = $userRepository;
         // }

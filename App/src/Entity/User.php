@@ -2,30 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: UsersRepository::class)]
-class Users
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\Table(name: '`user`')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
 
     /**
-     * @var Collection<int, Roles>
+     * @var string The hashed password
      */
-    #[ORM\ManyToMany(targetEntity: Roles::class, inversedBy: 'users')]
-    private Collection $UserRoles;
+    #[ORM\Column]
+    private ?string $password = null;
+
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -39,7 +47,6 @@ class Users
 
     public function __construct()
     {
-        $this->UserRoles = new ArrayCollection();
         $this->reviews = new ArrayCollection();
     }
 
@@ -59,8 +66,44 @@ class Users
 
         return $this;
     }
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
 
-    public function getPassword(): ?string
+    /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -73,27 +116,12 @@ class Users
     }
 
     /**
-     * @return Collection<int, Roles>
+     * @see UserInterface
      */
-    public function getUserRoles(): Collection
+    public function eraseCredentials(): void
     {
-        return $this->UserRoles;
-    }
-
-    public function addUserRole(Roles $userRole): static
-    {
-        if (!$this->UserRoles->contains($userRole)) {
-            $this->UserRoles->add($userRole);
-        }
-
-        return $this;
-    }
-
-    public function removeUserRole(Roles $userRole): static
-    {
-        $this->UserRoles->removeElement($userRole);
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getUserProfile(): ?UserProfile

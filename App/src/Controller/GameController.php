@@ -11,7 +11,7 @@ class GameController extends AbstractController
     #[Route('/add_game', methods: ['GET'])]
     public function add_game(): Response
     {
-        $test = new Users();
+        $test = new User();
         $test->setEmail('email');
         $test->setPassword('password');
         $jsonData = json_encode($test);

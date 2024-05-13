@@ -75,6 +75,7 @@ submitForm(): void {
         },
         error: error => {
             console.error('Error logging in:', error)
+            this.data = error.message;
         }
     });
 

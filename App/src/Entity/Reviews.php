@@ -29,7 +29,7 @@ class Reviews
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $Reviewer = null;
+    private ?User $Reviewer = null;
 
     public function getId(): ?int
     {
@@ -84,12 +84,12 @@ class Reviews
         return $this;
     }
 
-    public function getReviewer(): ?Users
+    public function getReviewer(): ?User
     {
         return $this->Reviewer;
     }
 
-    public function setReviewer(?Users $Reviewer): static
+    public function setReviewer(?User $Reviewer): static
     {
         $this->Reviewer = $Reviewer;
 
