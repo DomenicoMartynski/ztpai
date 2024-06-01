@@ -14,6 +14,7 @@ use App\Entity\UserProfile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class SecurityController extends AbstractController
 {
@@ -42,14 +43,11 @@ class SecurityController extends AbstractController
         }
 
         $token = $jwtManager->create($user);
+        $response = new JsonResponse([
+            'message' => 'Successfully logged in',
+            'token' => $token
+        ], JsonResponse::HTTP_CREATED);
 
-        $responseData = [
-           'message' => 'Successfully logged in',
-           'userId' => $user->getId(),
-           'token' => $token,
-        ];
-        $response = new JsonResponse($responseData, JsonResponse::HTTP_CREATED);
-    
         return $response;
 
     }
@@ -61,14 +59,19 @@ class SecurityController extends AbstractController
         $email = $data['email'];
         $password = $data['password'];
         $username = $data['username'];
-        
-        
+
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $checker = $userRepository->findOneBy(['email' => $email]);
+        if($checker){
+            return $this->json([
+                'message' => "The email has already been registered.    ",
+            ], Response::HTTP_UNAUTHORIZED);
+        }
         $userProfile = new UserProfile();
         $userProfile->setUsername($username);
         $userProfile->setProfilePicture('profile.png');
         $user = new User();
         $user->setEmail($email);
-
         $hashedPassword = $passwordHasher->hashPassword(
             $user,
             $password
