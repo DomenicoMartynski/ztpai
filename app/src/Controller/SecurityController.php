@@ -13,16 +13,18 @@ use App\Entity\Roles;
 use App\Entity\UserProfile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Component\HttpFoundation\Cookie;
 
 class SecurityController extends AbstractController
 {
     private $entityManager;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
     {
         $this->entityManager = $entityManager;
+        $this->security = $security;
     }
 
     #[Route('/api/login', name: 'api_login', methods: ['POST'])]
@@ -45,7 +47,7 @@ class SecurityController extends AbstractController
         $token = $jwtManager->create($user);
         $response = new JsonResponse([
             'message' => 'Successfully logged in',
-            'token' => $token
+            'token' => $token,
         ], JsonResponse::HTTP_CREATED);
 
         return $response;
@@ -64,7 +66,7 @@ class SecurityController extends AbstractController
         $checker = $userRepository->findOneBy(['email' => $email]);
         if($checker){
             return $this->json([
-                'message' => "The email has already been registered.    ",
+                'message' => "The email has already been registered.",
             ], Response::HTTP_UNAUTHORIZED);
         }
         $userProfile = new UserProfile();
@@ -90,6 +92,28 @@ class SecurityController extends AbstractController
         ];
 
         return new JsonResponse($responseData, JsonResponse::HTTP_CREATED);
+    }
+
+    #[Route('api/me', name: 'api_me', methods: ['GET'])]
+    public function getCurrentUser(): JsonResponse
+    {
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'message' => 'User not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $isAdmin = \in_array('ROLE_ADMIN', $user->getRoles(), true);
+
+        $responseData = [
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'adminPrivileges' => $isAdmin,
+        ];
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
     }
 
 }

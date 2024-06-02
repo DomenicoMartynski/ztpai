@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -11,6 +11,7 @@ import { CategoryComponent } from './game/category/category.component';
 import { GamedetailsComponent } from './game/gamedetails/gamedetails.component';
 import { SearchComponent } from './game/search/search.component';
 import { HeaderComponent } from './header/header.component';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -32,4 +33,23 @@ import { HeaderComponent } from './header/header.component';
 })
 export class AppComponent {
   title = 'Gamecritic';
+
+  constructor(
+    private router: Router,
+    private userService: UserService,
+  ) {}
+
+
+  redirectTo(page: string) {
+      this.router.navigate(['/', page]);
+  }
+
+  public isUserLoggedIn(): boolean {
+      return this.userService.isUserLoggedIn();
+  }
+
+  public isUserAdmin(): boolean {
+      return this.userService.isUserAdmin();
+  }
+
 }

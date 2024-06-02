@@ -13,6 +13,8 @@ use App\Entity\Reviews;
 use App\Entity\Games;
 use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
+
+
 class GameController extends AbstractController
 {
     private $entityManager;
@@ -54,40 +56,47 @@ class GameController extends AbstractController
         return new JsonResponse($genresData);
     }
 
-    #[Route('/api/add_game', methods: ['POST'])]
+    #[Route('/api/add_game', name: "api_add_game", methods: ['POST'])]
     public function add_game(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = $request->request->all();
+
         $name = $data['name'];
         $date = new DateTime($data['date']);
         $description = $data['description'];
-        $platforms = $data['platforms'];
-        $genres = $data['genres'];
+        $platforms = json_decode($data['platforms'], true);
+        $genres = json_decode($data['genres'], true);
 
-        
         $game = new Games();
+
         foreach($genres as $genre => $value){
             $game_genre = $this->entityManager->getRepository(Genres::class)->find($value);
-            $game->addGameGenre($game_genre);
+            if($game_genre) $game->addGameGenre($game_genre);
         }
         foreach($platforms as $platform => $value){
             $game_platform = $this->entityManager->getRepository(Platforms::class)->find($value);
-            $game->addGamePlatform($game_platform);
+            if($game_platform) $game->addGamePlatform($game_platform);
         }
+        #get the image
+        $image = $request->files->get('image');
+        if (!$image) $imageName = 'noimage.png';
+        else {
+            $imageName = md5(uniqid()).'.'.$image->guessExtension();
+            $image->move(
+                $this->getParameter('img_path'), // Ensure 'img_path' is set in your parameters.yml or services.yaml
+                $imageName
+            );
+        }
+        $game->setGameCover($imageName);
         // $game_genres->set;
         $game->setGameName($name);
         $game->setReleaseDate($date);
         $game->setDescription($description);
-        $game->setGameCover("TBD.png");
 
         $this->entityManager->persist($game);
         $this->entityManager->flush();
 
-        $responseData = [
-            'message' => 'Game added successfully',
-        ];
-
-        return new JsonResponse($responseData, JsonResponse::HTTP_CREATED);
+        return new JsonResponse(['status' => 'Image uploaded successfully', 'gameID' => $game->getId()], JsonResponse::HTTP_CREATED);
     }
 
     

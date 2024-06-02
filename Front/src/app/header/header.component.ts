@@ -11,12 +11,10 @@ export class HeaderComponent {
   constructor(
     private router: Router,
 ) { }
-
-  logout(): void{
-    sessionStorage.removeItem("token");
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-  }, 1000);
-
+  logout(): void {
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/login']).then(() => {
+        window.location.reload();
+      });
   }
 }

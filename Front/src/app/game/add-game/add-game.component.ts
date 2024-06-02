@@ -1,8 +1,10 @@
-import { Component,  OnInit  } from '@angular/core';
+import { Component,  ElementRef, ViewChild  } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { GameService } from '../../services/game.service';
 import { CommonModule } from '@angular/common';
+
+
 @Component({
   selector: 'app-add-game',
   standalone: true,
@@ -11,24 +13,23 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['../gamedetails/gamedetails.component.css','../../my-account/my-account.component.css','./add-game.component.css']
 })
 export class AddGameComponent {
-  addform: FormGroup = this.fb.group({});
-  platforms: any[] = [];
-  genres: any[] = [];
-  message: string = "";
+  @ViewChild('fileInput') fileInput?: ElementRef;
+  addform: FormGroup;
+  platforms: any[] = []; // Populate this with your platforms data
+  genres: any[] = []; // Populate this with your genres data
+  message: string = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private gameService: GameService
-  ) {}
+  constructor(private fb: FormBuilder, private gameService: GameService) {
+    this.addform = this.fb.group({});
+  }
 
   ngOnInit() {
     this.addform = this.fb.group({
       name: [''],
       date: [''],
       description: [''],
-      platforms: this.fb.array([]),
-      genres: this.fb.array([]),
-      file: [null]
+      platforms: this.fb.array(this.platforms.map(() => this.fb.control(false))),
+      genres: this.fb.array(this.genres.map(() => this.fb.control(false)))
     });
 
     this.gameService.getPlatforms().subscribe((platforms: any[]) => {
@@ -47,21 +48,32 @@ export class AddGameComponent {
     items.forEach(() => formArray.push(this.fb.control(false)));
   }
 
-  onSubmit() {
+  submitForm(event: Event){
+    event.preventDefault();
+    const file = this.fileInput?.nativeElement.files[0];
     const selectedPlatforms = this.addform.value.platforms
       .map((checked: boolean, i: number) => checked ? this.platforms[i].id : null)
       .filter((v: any)=> v !== null);
     const selectedGenres = this.addform.value.genres
       .map((checked: boolean, i: number) => checked ? this.genres[i].id : null)
       .filter((v: any) => v !== null);
-    const formData = {
-      name: this.addform.value.name,
-      date: this.addform.value.date,
-      description: this.addform.value.description,
-      platforms: selectedPlatforms,
-      genres: selectedGenres,
-      file: this.addform.value.file,
-    };
+
+    const formData = new FormData();
+    formData.append('name', this.addform.value.name);
+    formData.append('date', this.addform.value.date);
+    formData.append('description', this.addform.value.description);
+    formData.append('platforms', JSON.stringify(selectedPlatforms)); // Convert arrays/objects to JSON strings
+    formData.append('genres', JSON.stringify(selectedGenres));
+
+    if (file) {
+      formData.append('image', file);
+    }
+    console.log(formData);
+
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+    
     this.gameService.addGame(formData).subscribe({
       next: response => {
           console.log('Added the game successfully', response);
@@ -71,6 +83,6 @@ export class AddGameComponent {
           console.error('Error adding the game:', error)
           this.message = "Something went wrong. Try again";
       }
-  });
-}
+    });
+  }
 }

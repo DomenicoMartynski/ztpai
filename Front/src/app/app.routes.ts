@@ -9,12 +9,15 @@ import { AddGameComponent } from './game/add-game/add-game.component';
 import { CategoryComponent } from './game/category/category.component';
 import { GamedetailsComponent } from './game/gamedetails/gamedetails.component';
 import { SearchComponent } from './game/search/search.component';
+
+import { authGuard, loggedInAuthGuard } from './services/auth.guard';
+
 export const routes: Routes = [
 
     { path:'', component: HomeComponent },
-    { path:'login', component: LoginComponent, },
-    { path:'register', component: RegisterComponent },
-    { path:'my-account', component: MyAccountComponent },
+    { path:'login', component: LoginComponent, canActivate: [loggedInAuthGuard] },
+    { path:'register', component: RegisterComponent, canActivate: [loggedInAuthGuard]},
+    { path:'my-account', component: MyAccountComponent, canActivate: [authGuard]},
     { path:'addgame', component: AddGameComponent },
     { path:'category', component: CategoryComponent },
     { path:'gamedetails', component: GamedetailsComponent },
