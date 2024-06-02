@@ -66,8 +66,8 @@ export class LoginComponent {
             password: this.loginForm.value.password,
         }
 
-        console.log(JSON.stringify(this.loginForm.value, null, 2));
-        console.log((formData));
+        //console.log(JSON.stringify(this.loginForm.value, null, 2));
+        //console.log((formData));
         
         this.securityService.loginUser(formData).subscribe({
             next: response => {

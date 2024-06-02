@@ -1,37 +1,28 @@
 <div class="game-details">    
     <div class="details">
         <div class='message'>
-            <h1></h1>
+            <h1>{{message}}</h1>
         </div>
         <div class="user-info-down">
             <div class="form">
-                <form action="addGame" method="POST" enctype="multipart/form-data">
+                <form [formGroup]="addform" (ngSubmit)="onSubmit()">
                     <h1>Name</h1>
-                    <input name="game_name" type="text" id="game_name" placeholder="Game name" required>
+                    <input name="game_name" type="text" id="game_name" placeholder="Game name" formControlName="name" required>
                     <h1>Release date</h1>
-                    <input name="game_date" type="date" id="game_date" placeholder="Release date" required>
+                    <input name="game_date" type="date" id="game_date" placeholder="Release date" formControlName="date" required>
                     <h1>Description</h1>
-                    <textarea name="game_description" id="game_description" placeholder="Game description" required></textarea>
+                    <textarea name="game_description" id="game_description" placeholder="Game description" formControlName="description" required></textarea>
                     <h1>Available on:</h1>
-                    <div id="game-platforms">
-                        <div class="platform-div">
-                            <input type="checkbox" class="platform" value="Template Platform 1" name="platforms">
-                            <p>Template Platform 1</p>
+                    <div id="game-platforms" formArrayName="platforms" *ngIf="platforms.length">
+                        <div class="platform-div" *ngFor="let platform of platforms; let i = index">
+                          <input type="checkbox" class="platform" [formControlName]="i"><p>{{ platform.name }}</p>
                         </div>
-                        <div class="platform-div">
-                            <input type="checkbox" class="platform" value="Template Platform 2" name="platforms">
-                            <p>Template Platform 2</p>
-                        </div>
-                    </div>
+                      </div>
+                    
                     <h1>Categories:</h1>
-                    <div id="game-categories">
-                        <div class="platform-div">
-                            <input type="checkbox" class="platform" value="WIP" name="genres">
-                            <p>Template Genre 1</p>
-                        </div>
-                        <div class="platform-div">
-                            <input type="checkbox" class="platform" value="WIP" name="genres">
-                            <p>Template Genre 2</p>
+                    <div id="game-categories" formArrayName="genres" *ngIf="genres.length">
+                        <div class="platform-div" *ngFor="let genre of genres; let i = index">
+                          <input type="checkbox" class="platform" [formControlName]="i"><p>{{ genre.name }}</p>
                         </div>
                     </div>
                     <div id="game-add-bottom">

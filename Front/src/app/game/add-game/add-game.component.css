@@ -1,6 +1,3 @@
-.game-details{
-    height:120vh;
-}
 .details{
     height:100%;
 }
@@ -50,7 +47,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1vw;
     padding: 2.5%;
-
+    margin-bottom: 5vh;
 }
 .platform-div{
     display: flex;
@@ -81,6 +78,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1vw;
+    margin-bottom: 5vh;
 }
 #game-add-bottom{
     padding: 2.5%;
@@ -136,19 +134,19 @@
     #game-platforms{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        font-size: 1.25em;
+        font-size: 1em;
+        
     }
     #game-categories{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        font-size: 1.25em;
+        font-size: 1em;
+        
     }
-    .details{
-        height: 100vh;
-    }
+
     .game-details{
         margin-top: 2vh;
-        height: 90vh;
+
     }
     #game-add-bottom-text h1{
         font-size: 1.5em;

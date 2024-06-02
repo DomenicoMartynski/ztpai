@@ -72,11 +72,12 @@ class SecurityController extends AbstractController
         $userProfile->setProfilePicture('profile.png');
         $user = new User();
         $user->setEmail($email);
+
         $hashedPassword = $passwordHasher->hashPassword(
             $user,
             $password
         );
-
+        $user->setRoles(array('ROLE_USER'));
         $user->setPassword($hashedPassword);
         $user->setUserProfile($userProfile);
 
