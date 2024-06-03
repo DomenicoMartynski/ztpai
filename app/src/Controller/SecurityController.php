@@ -112,8 +112,39 @@ class SecurityController extends AbstractController
             'email' => $user->getEmail(),
             'adminPrivileges' => $isAdmin,
         ];
-
+        
         return new JsonResponse($responseData, JsonResponse::HTTP_OK);
     }
+    #[Route('api/me/all', name: 'api_me_all', methods: ['GET'])]
+    public function getProfileInfo(): JsonResponse
+    {
+        $user = $this->security->getUser();
 
+        if (!$user) {
+            return $this->json([
+                'message' => 'User not found',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $isAdmin = \in_array('ROLE_ADMIN', $user->getRoles(), true);
+
+        $responseData = [
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'username' => $user->getUserProfile()->getUsername(),
+            'reviews' => [],
+            'adminPrivileges' => $isAdmin,
+        ];
+        
+        foreach ($user->getReviews() as $review) {
+            $responseData['reviews'][] = [
+                'id' => $review->getId(),
+                'reviewer' => $user->getUserName(),
+                'rating' => $review->getRatingGiven(),
+                'comment' => $review->getUserComment(),
+                'game_name' => $review->getReviewedGame()->getGameName(),
+            ];
+        }
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
+    }
 }

@@ -45,6 +45,9 @@
         </div>
         <h1>Latest Reviews</h1>
         <div class="decorative-line"></div>
+        @if(game.reviews.length == 0){
+            <div class="no-listings"><h3>No reviews yet.</h3></div><br><br>
+        }
         @for (review of game.reviews; track review){
         <div class="reviews">
             <div class="user_display">
@@ -57,7 +60,7 @@
             </div>
         </div>
         }
-
+        @if(isUserLoggedIn()){
         <h1>LEAVE YOUR REVIEW</h1>
         <div class="your_review">
             <div class="my_display">
@@ -86,6 +89,7 @@
                 </div>
             </div>
         </div>
+        }
     </div>
 
 </div>

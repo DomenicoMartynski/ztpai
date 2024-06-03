@@ -19,7 +19,7 @@ export const routes: Routes = [
     { path:'register', component: RegisterComponent, canActivate: [loggedInAuthGuard]},
     { path:'my-account', component: MyAccountComponent, canActivate: [authGuard]},
     { path:'addgame', component: AddGameComponent, canActivate: [authGuard] },
-    { path:'category/:platform', component: CategoryComponent, canActivate: [authGuard] },
+    { path:'category/:id', component: CategoryComponent, canActivate: [authGuard] },
     { path:'gamedetails/:id', component: GamedetailsComponent, canActivate: [authGuard]},
     { path:'search', component: SearchComponent, canActivate: [authGuard] },
     { path: '**', redirectTo: '' },

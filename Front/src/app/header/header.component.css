@@ -27,7 +27,8 @@ header label{
     display: none;
 }
 header .logo{
-    margin-top: 2vh; padding:4vh;
+    margin-top: 1vh;
+    padding:4vh;
     aspect-ratio: 1 / 1;
     width: 10%;
     font-weight: bolder;

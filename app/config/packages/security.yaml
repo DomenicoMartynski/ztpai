@@ -53,6 +53,7 @@ security:
         - { path: ^/api/games/basic/all, roles: PUBLIC_ACCESS }
         - { path: ^/api/games/basic/worst, roles: PUBLIC_ACCESS }
         - { path: ^/api/games/basic/best, roles: PUBLIC_ACCESS }
+        - { path: ^/api/games/platform/, roles: PUBLIC_ACCESS }
         - { path: ^/api/games/, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }

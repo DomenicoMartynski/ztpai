@@ -16,18 +16,17 @@ class HomeController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
-
-    #[Route("/api/games/basic/all", name: "api_games", methods: ["GET"])]
-    public function getGames(): JsonResponse
+    #[Route("/api/games/basic/featured", name: "api_games", methods: ["GET"])]
+    public function getFeaturedGames(): JsonResponse
     {
         $games = $this->entityManager->getRepository(Games::class)->findAll();
-        $gamesData = [];
+        $filteredGames = [];
         $totalScores = 0;
         $reviewCount = 0;
         $overallScore = 0;
         foreach ($games as $game) {
             $genreNames = [];
-
+            $platformNames = [];
             foreach ($game->getGameGenres() as $genre) 
                 $genreNames[] = $genre->getGenreName();
 
@@ -40,7 +39,7 @@ class HomeController extends AbstractController
             }
 
             if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
-            $gamesData[] = [
+            $filteredGames[] = [
                 'id' => $game->getId(),
                 'name' => $game->getGameName(),
                 'score' => $overallScore,
@@ -49,7 +48,13 @@ class HomeController extends AbstractController
                 'image' => $game->getGameCover()
             ];
         }
-        return new JsonResponse($gamesData);
+        usort($filteredGames, function($a, $b) {
+            return $b['id'] <=> $a['id'];
+        });
+
+        $featuredGames = array_slice($filteredGames, 0, 9);
+
+        return new JsonResponse($featuredGames);
     }
     #[Route("/api/games/basic/worst", name: "api_worst_games", methods: ["GET"])]
     public function getWorstGames(): JsonResponse

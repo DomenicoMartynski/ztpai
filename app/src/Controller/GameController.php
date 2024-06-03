@@ -67,6 +67,96 @@ class GameController extends AbstractController
 
         return new JsonResponse($responseData, JsonResponse::HTTP_OK);
     }
+    #[Route("/api/games/basic/all", name: "api_games", methods: ["GET"])]
+    public function getGames(): JsonResponse
+    {
+        $games = $this->entityManager->getRepository(Games::class)->findAll();
+        $gamesData = [];
+        $totalScores = 0;
+        $reviewCount = 0;
+        $overallScore = 0;
+        foreach ($games as $game) {
+            $genreNames = [];
+            $platformNames = [];
+            foreach ($game->getGameGenres() as $genre) 
+                $genreNames[] = $genre->getGenreName();
+
+            foreach ($game->getGamePlatforms() as $platform)
+                $platformNames[] = $platform->getPlatformName();
+
+            foreach ($game->getReviews() as $review){
+                $totalScores[] = $review->getRatingGiven();
+                $reviewCount++;
+            }
+
+            if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
+            $gamesData[] = [
+                'id' => $game->getId(),
+                'name' => $game->getGameName(),
+                'score' => $overallScore,
+                'genres' => $genreNames,
+                'platforms' => $platformNames,
+                'image' => $game->getGameCover()
+            ];
+        }
+        return new JsonResponse($gamesData);
+    }
+
+    #[Route('/api/games/platform/{id}', name: 'api_platform_games_basic', methods: ['GET'])]
+    public function getGamesByPlatformId(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $platform = $entityManager->getRepository(Platforms::class)->find($id);
+        
+        if (!$platform) {
+            return new JsonResponse(['message' => 'Platform not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $response = [
+            'platform_name' => $platform->getPlatformName(),
+            'gamelist' => []
+        ];
+    
+        $games = $platform->getGames();
+        $gamesData = [];
+    
+        foreach ($games as $game) {
+            $genreNames = [];
+            $platformNames = [];
+            $totalScores = 0;
+            $reviewCount = 0;
+            $overallScore = 0;
+    
+            foreach ($game->getGameGenres() as $genre) {
+                $genreNames[] = $genre->getGenreName();
+            }
+    
+            foreach ($game->getGamePlatforms() as $gamePlatform) {
+                $platformNames[] = $gamePlatform->getPlatformName();
+            }
+    
+            foreach ($game->getReviews() as $review) {
+                $totalScores += $review->getRatingGiven();
+                $reviewCount++;
+            }
+    
+            if ($reviewCount > 0) {
+                $overallScore = $totalScores / $reviewCount;
+            }
+    
+            $gamesData[] = [
+                'id' => $game->getId(),
+                'name' => $game->getGameName(),
+                'score' => $overallScore,
+                'platforms' => $platformNames,
+                'genres' => $genreNames,
+                'image' => $game->getGameCover()
+            ];
+        }
+    
+        $response['gamelist'] = $gamesData;
+    
+        return new JsonResponse($response);
+    }
 
     #[Route("/api/platforms", name: "api_platforms", methods: ["GET"])]
     public function getPlatforms(): JsonResponse

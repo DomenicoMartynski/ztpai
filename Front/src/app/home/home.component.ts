@@ -28,7 +28,7 @@ export class HomeComponent  implements OnInit{
       private router: Router,
   ) {}
   ngOnInit() {
-    this.loadAllGames();
+    this.loadFeaturedGames();
     this.loadWorstGames();
     this.loadBestGames();
   }
@@ -38,8 +38,8 @@ export class HomeComponent  implements OnInit{
   }
 
 
-  private loadAllGames() {
-    this.gameService.getGames().subscribe({
+  private loadFeaturedGames() {
+    this.gameService.getFeaturedGames().subscribe({
         next: data => {
             this.games = data;
         },

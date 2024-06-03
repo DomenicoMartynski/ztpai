@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 export class SecurityService {
     private loginAPI= 'http://localhost:8000/api/login';
     private registerAPI = 'http://localhost:8000/api/register';
-
+    private meUrl = 'http://localhost:8000/api/me/all';
     constructor(private http: HttpClient) { }
 
     loginUser(User: any): Observable<any> {
@@ -38,4 +38,13 @@ export class SecurityService {
             })
         );
     }
+    getUser(): Observable<any[]> {
+      return this.http.get<any[]>(this.meUrl).pipe(
+        catchError(error => {
+            console.error('Error fetching user info: ', error);
+            return throwError(()=> new Error('Couldnt fetch user info.'));
+        })
+    );
+    }
+
 }

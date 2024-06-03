@@ -25,8 +25,8 @@ final class Version20240602102039 extends AbstractMigration
         $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (3,'PS3')");
         $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (4,'PS4')");
         $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (5,'PS5')");
-        $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (6,'XBOX')");
-        $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (7,'PSVita & PSP')");
+        $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (6,'PSVita & PSP')");
+        $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (7,'XBOX')");
         $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (8,'XBOX360')");
         $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (9,'XBOXONE')");
         $this->addSql("INSERT INTO \"platforms\" (id, platform_name) VALUES (10,'XBOX SERIES S/X')");

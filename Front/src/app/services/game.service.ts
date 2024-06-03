@@ -10,10 +10,12 @@ export class GameService {
   private platformsUrl = 'http://localhost:8000/api/platforms';
   private genresUrl = 'http://localhost:8000/api/genres';
   private gamesUrl = 'http://localhost:8000/api/games/basic/all';
+  private featuredUrl = 'http://localhost:8000/api/games/basic/featured'
   private worstUrl = 'http://localhost:8000/api/games/basic/worst';
   private bestUrl = 'http://localhost:8000/api/games/basic/best';
   private addGameUrl = 'http://localhost:8000/api/add_game';
-  private gameUrl = 'http://localhost:8000/api/games'
+  private gameUrl = 'http://localhost:8000/api/games';
+  private platformUrl = 'http://localhost:8000/api/games/platform';
   constructor(private http: HttpClient) {}
 
   getGame(gameId: number): Observable<any> {
@@ -32,6 +34,24 @@ export class GameService {
       })
   );
   }
+  getFeaturedGames(): Observable<any[]> {
+    return this.http.get<any[]>(this.featuredUrl).pipe(
+      catchError(error => {
+          console.error('Error fetching games: ', error);
+          return throwError(()=> new Error('Couldnt fetch games.'));
+      })
+  );
+  }
+  getGamesByPlatformId(platformId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.platformUrl}/${platformId}`).pipe(
+      catchError(error => {
+            console.error('Error fetching JSON data:', error);
+            return throwError(()=> new Error('Something went wrong; please try again later.'));
+      })
+  );
+  }
+
+
   getWorstGames(): Observable<any[]> {
     return this.http.get<any[]>(this.worstUrl).pipe(
       catchError(error => {
