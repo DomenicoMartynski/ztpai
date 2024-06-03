@@ -23,6 +23,42 @@ class GameController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
+
+    #[Route("/api/games/basic/all", name: "api_games", methods: ["GET"])]
+    public function getGames(): JsonResponse
+    {
+        $games = $this->entityManager->getRepository(Games::class)->findAll();
+        $gamesData = [];
+        foreach ($games as $game) {
+            $totalScore = 0;
+            $reviewCount = 0;
+            $overallScore = 0;
+            $genreNames = [];
+            $platformNames = [];
+            foreach ($game->getGameGenres() as $genre) 
+                $genreNames[] = $genre->getGenreName();
+
+            foreach ($game->getGamePlatforms() as $platform)
+                $platformNames[] = $platform->getPlatformName();
+
+            foreach ($game->getReviews() as $review){
+                $totalScore += $review->getRatingGiven();
+                $reviewCount++;
+            }
+
+            if($reviewCount!=0) $overallScore = $totalScore/$reviewCount;
+            $gamesData[] = [
+                'id' => $game->getId(),
+                'name' => $game->getGameName(),
+                'score' => $overallScore,
+                'genres' => $genreNames,
+                'platforms' => $platformNames,
+                'image' => $game->getGameCover()
+            ];
+        }
+        return new JsonResponse($gamesData);
+    }
+
     #[Route('/api/games/{id}', name: 'api_games_basic', methods: ['GET'])]
     public function getGameDetails(int $id, EntityManagerInterface $entityManager): JsonResponse
     {
@@ -41,12 +77,13 @@ class GameController extends AbstractController
             $platformNames[] = $platform->getPlatformName();
 
         foreach ($game->getReviews() as $review){
-            $totalScore[] = $review->getRatingGiven();
+            $totalScore += $review->getRatingGiven();
             $reviewCount++;
         }
-        if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
+        if($reviewCount!=0) $overallScore = $totalScore/$reviewCount;
         $releaseDateString = $game->getReleaseDate()->format('Y-m-d');
         $responseData = [
+            'id' => $game->getId(),
             'name' => $game->getGameName(),
             'description' => $game->getDescription(),
             'date' => $releaseDateString,
@@ -66,40 +103,6 @@ class GameController extends AbstractController
         }
 
         return new JsonResponse($responseData, JsonResponse::HTTP_OK);
-    }
-    #[Route("/api/games/basic/all", name: "api_games", methods: ["GET"])]
-    public function getGames(): JsonResponse
-    {
-        $games = $this->entityManager->getRepository(Games::class)->findAll();
-        $gamesData = [];
-        $totalScores = 0;
-        $reviewCount = 0;
-        $overallScore = 0;
-        foreach ($games as $game) {
-            $genreNames = [];
-            $platformNames = [];
-            foreach ($game->getGameGenres() as $genre) 
-                $genreNames[] = $genre->getGenreName();
-
-            foreach ($game->getGamePlatforms() as $platform)
-                $platformNames[] = $platform->getPlatformName();
-
-            foreach ($game->getReviews() as $review){
-                $totalScores[] = $review->getRatingGiven();
-                $reviewCount++;
-            }
-
-            if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
-            $gamesData[] = [
-                'id' => $game->getId(),
-                'name' => $game->getGameName(),
-                'score' => $overallScore,
-                'genres' => $genreNames,
-                'platforms' => $platformNames,
-                'image' => $game->getGameCover()
-            ];
-        }
-        return new JsonResponse($gamesData);
     }
 
     #[Route('/api/games/platform/{id}', name: 'api_platform_games_basic', methods: ['GET'])]
@@ -122,7 +125,7 @@ class GameController extends AbstractController
         foreach ($games as $game) {
             $genreNames = [];
             $platformNames = [];
-            $totalScores = 0;
+            $totalScore = 0;
             $reviewCount = 0;
             $overallScore = 0;
     
@@ -135,12 +138,12 @@ class GameController extends AbstractController
             }
     
             foreach ($game->getReviews() as $review) {
-                $totalScores += $review->getRatingGiven();
+                $totalScore += $review->getRatingGiven();
                 $reviewCount++;
             }
     
             if ($reviewCount > 0) {
-                $overallScore = $totalScores / $reviewCount;
+                $overallScore = $totalScore / $reviewCount;
             }
     
             $gamesData[] = [
@@ -231,29 +234,6 @@ class GameController extends AbstractController
         $this->entityManager->flush();
 
         return new JsonResponse(['status' => 'Image uploaded successfully', 'gameID' => $game->getId()], JsonResponse::HTTP_CREATED);
-    }
-
-    
-    #[Route('/gamedetails', name: 'app_gamedetails')]
-    public function gamedetails(): Response
-    {
-        return $this->render('game/gamedetails.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
-    }
-    #[Route('/search', name: 'app_search')]
-    public function search(): Response
-    {
-        return $this->render('game/search.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
-    }
-    #[Route('/category', name: 'app_category')]
-    public function category(): Response
-    {
-        return $this->render('game/category.html.twig', [
-            'controller_name' => 'GameController',
-        ]);
     }
 
 }

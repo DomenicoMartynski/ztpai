@@ -65,13 +65,13 @@
         <div class="your_review">
             <div class="my_display">
                     <img class="my-pic" src="assets/img/profile.png">
-                <p> Me </p>    
+                <p>Me</p>    
             </div>
             <div class="review_details">
                 <div class="review_content">
-                <form class="leave_a_review" action="review" method="POST">
+                <form class="leave_a_review" [formGroup]="reviewform" enctype="multipart/form-data">
                     <div class="rating">
-                    <select name="rating_given" id="rating_given" required>
+                    <select name="rating_given" id="rating_given" formControlName="rating_given" required>
                         <option value="1"> 1 </option>       
                         <option value="2"> 2 </option>     
                         <option value="3"> 3 </option>  
@@ -79,11 +79,10 @@
                         <option value="5"> 5 </option>          
                     </select> out of 5 <i class="fas fa-star"></i>
                     </div>
-                    <input name="user_id" type="hidden" id="user_id" value="WIP">
-                    <input name="game_id" type="hidden" id="game_id" value="WIP">
-                    <textarea name="review_comment" type="text" id="review_comment" placeholder="Start writing your review here" required></textarea>
+                    <input name="game_id" type="hidden" id="game.id" formControlName="game_id" [value]="game.id">
+                    <textarea name="review_comment" type="text" id="review_comment" placeholder="Start writing your review here" formControlName="review_comment" required></textarea>
                     <div class="button">
-                        <button id="button" type="submit">Submit</button>
+                        <button id="button" type="submit" (click)="submitForm($event)">Submit</button>
                     </div>
                 </form>
                 </div>

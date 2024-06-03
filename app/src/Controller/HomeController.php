@@ -16,12 +16,12 @@ class HomeController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
-    #[Route("/api/games/basic/featured", name: "api_games", methods: ["GET"])]
+    #[Route("/api/games/basic/featured", name: "api_featured_games", methods: ["GET"])]
     public function getFeaturedGames(): JsonResponse
     {
         $games = $this->entityManager->getRepository(Games::class)->findAll();
         $filteredGames = [];
-        $totalScores = 0;
+        $totalScore = 0;
         $reviewCount = 0;
         $overallScore = 0;
         foreach ($games as $game) {
@@ -34,11 +34,11 @@ class HomeController extends AbstractController
                 $platformNames[] = $platform->getPlatformName();
 
             foreach ($game->getReviews() as $review){
-                $totalScores[] = $review->getRatingGiven();
+                $totalScore += $review->getRatingGiven();
                 $reviewCount++;
             }
 
-            if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
+            if($reviewCount!=0) $overallScore = $totalScore/$reviewCount;
             $filteredGames[] = [
                 'id' => $game->getId(),
                 'name' => $game->getGameName(),
@@ -61,11 +61,10 @@ class HomeController extends AbstractController
     {
         $games = $this->entityManager->getRepository(Games::class)->findAll();
         $filteredGames = [];
-        $totalScores = 0;
-        $reviewCount = 0;
-        $overallScore = 0;
         foreach ($games as $game) {
-
+            $totalScore = 0;
+            $reviewCount = 0;
+            $overallScore = 0;
             foreach ($game->getGameGenres() as $genre) 
                 $genreNames[] = $genre->getGenreName();
 
@@ -73,11 +72,11 @@ class HomeController extends AbstractController
                 $platformNames[] = $platform->getPlatformName();
 
             foreach ($game->getReviews() as $review){
-                $totalScores[] = $review->getRatingGiven();
+                $totalScore += $review->getRatingGiven();
                 $reviewCount++;
             }
 
-            if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
+            if($reviewCount!=0) $overallScore = $totalScore/$reviewCount;
             
             if ($reviewCount > 5 && $overallScore < 2.0) {
                 $filteredGames[] = [
@@ -104,11 +103,11 @@ class HomeController extends AbstractController
     {
         $games = $this->entityManager->getRepository(Games::class)->findAll();
         $filteredGames = [];
-        $totalScores = 0;
-        $reviewCount = 0;
-        $overallScore = 0;
-        foreach ($games as $game) {
 
+        foreach ($games as $game) {
+            $totalScore = 0;
+            $reviewCount = 0;
+            $overallScore = 0;
             foreach ($game->getGameGenres() as $genre) 
                 $genreNames[] = $genre->getGenreName();
 
@@ -116,11 +115,11 @@ class HomeController extends AbstractController
                 $platformNames[] = $platform->getPlatformName();
 
             foreach ($game->getReviews() as $review){
-                $totalScores[] = $review->getRatingGiven();
+                $totalScore += $review->getRatingGiven();
                 $reviewCount++;
             }
 
-            if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
+            if($reviewCount!=0) $overallScore = $totalScore/$reviewCount;
             
             if ($reviewCount > 5 && $overallScore > 4.5) {
                 $filteredGames[] = [
@@ -128,7 +127,7 @@ class HomeController extends AbstractController
                     'name' => $game->getGameName(),
                     'score' => $overallScore,
                     'genres' => $genreNames,
-                    'platforms' => $platformNames,
+                    'platforms' => $platformNames,gi
                     'image' => $game->getGameCover()
                 ];
             }

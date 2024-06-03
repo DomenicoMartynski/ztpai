@@ -18,6 +18,7 @@ export class CategoryComponent {
     private route: ActivatedRoute,
     private router: Router,
   ) {}
+
   goBack() {
     this.router.navigate(['/']);
   }

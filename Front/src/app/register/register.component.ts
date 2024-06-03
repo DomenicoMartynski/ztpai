@@ -74,8 +74,6 @@ export class RegisterComponent {
             password: this.registerForm.value.password,
         }
 
-        console.log(JSON.stringify(this.registerForm.value, null, 2));
-        console.log((formData));
         
         this.securityService.registerUser(formData).subscribe({
             next: response => {

@@ -17,11 +17,7 @@ export class HomeComponent  implements OnInit{
   games: any;
   worst: any;
   best: any;
-  searchControl = new FormControl('');
-  searchForm = new FormGroup({
-      searchControl: this.searchControl
-  });
-
+  
   constructor(
       private gameService: GameService,
       private userService: UserService,

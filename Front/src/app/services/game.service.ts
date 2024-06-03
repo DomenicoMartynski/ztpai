@@ -9,7 +9,7 @@ import { catchError, map } from 'rxjs/operators';
 export class GameService {
   private platformsUrl = 'http://localhost:8000/api/platforms';
   private genresUrl = 'http://localhost:8000/api/genres';
-  private gamesUrl = 'http://localhost:8000/api/games/basic/all';
+  private allGamesUrl = 'http://localhost:8000/api/games/basic/all';
   private featuredUrl = 'http://localhost:8000/api/games/basic/featured'
   private worstUrl = 'http://localhost:8000/api/games/basic/worst';
   private bestUrl = 'http://localhost:8000/api/games/basic/best';
@@ -27,7 +27,7 @@ export class GameService {
     );
 }
   getGames(): Observable<any[]> {
-    return this.http.get<any[]>(this.gamesUrl).pipe(
+    return this.http.get<any[]>(this.allGamesUrl).pipe(
       catchError(error => {
           console.error('Error fetching games: ', error);
           return throwError(()=> new Error('Couldnt fetch games.'));
@@ -88,15 +88,6 @@ export class GameService {
   }
   
   addGame(formData: FormData): Observable<any> {
-    // const token = sessionStorage.getItem('token');
-    // if (!token) {
-    //   // Handle the case where token is not available
-    //   console.error('Token not found in sessionStorage.');
-    //   return throwError(() => new Error('Token not found in sessionStorage.'));
-    // }
-    const headers = new HttpHeaders({
-      // 'Authorization': `Bearer ${token}`
-    });
     return this.http.post<any>(`${this.addGameUrl}`, formData, { observe: 'response' }).pipe(
       map(response => {
         if (response.status === 201) {
