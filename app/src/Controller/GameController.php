@@ -23,6 +23,50 @@ class GameController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
+    #[Route('/api/games/{id}', name: 'api_games_basic', methods: ['GET'])]
+    public function getGameDetails(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $game = $entityManager->getRepository(Games::class)->find($id);
+        $totalScore = 0;
+        $reviewCount = 0;
+        $overallScore = 0;
+        if (!$game) {
+            return new JsonResponse(['error' => 'Game not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+        #$image = $set->getImage();
+        foreach ($game->getGameGenres() as $genre) 
+            $genreNames[] = $genre->getGenreName();
+
+        foreach ($game->getGamePlatforms() as $platform)
+            $platformNames[] = $platform->getPlatformName();
+
+        foreach ($game->getReviews() as $review){
+            $totalScore[] = $review->getRatingGiven();
+            $reviewCount++;
+        }
+        if($reviewCount!=0) $overallScore = $totalScores/$reviewCount;
+        $releaseDateString = $game->getReleaseDate()->format('Y-m-d');
+        $responseData = [
+            'name' => $game->getGameName(),
+            'description' => $game->getDescription(),
+            'date' => $releaseDateString,
+            'score' => $overallScore,
+            'platforms' => $platformNames,
+            'genres' => $genreNames,
+            'reviews' => []
+        ];
+
+        foreach ($game->getReviews() as $review) {
+            $responseData['reviews'][] = [
+                'id' => $review->getId(),
+                'reviewer' => $review->getReviewer(),
+                'rating' => $review->getRatingGiven(),
+                'comment' => $review->getUserComment()
+            ];
+        }
+
+        return new JsonResponse($responseData, JsonResponse::HTTP_OK);
+    }
 
     #[Route("/api/platforms", name: "api_platforms", methods: ["GET"])]
     public function getPlatforms(): JsonResponse

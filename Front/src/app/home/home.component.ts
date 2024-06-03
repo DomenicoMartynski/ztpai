@@ -13,8 +13,10 @@ import { UserService } from '../services/user.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent  implements OnInit{
   games: any;
+  worst: any;
+  best: any;
   searchControl = new FormControl('');
   searchForm = new FormGroup({
       searchControl: this.searchControl
@@ -27,7 +29,14 @@ export class HomeComponent {
   ) {}
   ngOnInit() {
     this.loadAllGames();
+    this.loadWorstGames();
+    this.loadBestGames();
   }
+
+  goToGamePage(gameId: number) {
+    this.router.navigate(['/gamedetails', gameId]);
+  }
+
 
   private loadAllGames() {
     this.gameService.getGames().subscribe({
@@ -38,6 +47,26 @@ export class HomeComponent {
             console.error('Error fetching games:', error);
         }
     });
+  }
+  private loadWorstGames() {
+    this.gameService.getWorstGames().subscribe({
+        next: data => {
+            this.worst = data;
+        },
+        error: error => {
+            console.error('Error fetching worst games:', error);
+        }
+    });
+  }
+    private loadBestGames() {
+      this.gameService.getBestGames().subscribe({
+          next: data => {
+              this.best = data;
+          },
+          error: error => {
+              console.error('Error fetching best games:', error);
+          }
+      });
   }
   
   public isUserLoggedIn(): boolean {

@@ -54,5 +54,5 @@
 /.web-server-pid
 
 /var/db_data
-
+.App/public/uploads/img/*
 # .env

@@ -1,11 +1,54 @@
 <header>
-<a routerLink="">Home</a>
-<a routerLink="/login">Login</a><br>
-<a routerLink="/register">Register</a><br>
-<a routerLink="/my-account">My Account</a><br>
-<a routerLink="/addgame">Add Game</a><br>
-<a routerLink="/category">Category Page</a><br>
-<a routerLink="/gamedetails">Game Details</a><br>
-<a routerLink="/search">Search</a><br>
-<div class="logout-button"><button type="submit" (click)="logout()">Log Out</button> </div>
+    <div class="logo">
+        <a href="/">
+        <img src="assets/img/logonavbar.svg" alt="Logo">
+        </a>
+      </div>
+        <input type="checkbox" id="menu-bar">
+        <label for="menu-bar"><i class="fas fa-bars"></i></label>
+        <nav class="navbar">
+      
+          <ul class="nav-links">
+            <li><a href="/allgames"><i class="fas fa-search"></i></a>
+            <li><a href="/category?platform=pc">PC</a></li>
+            <li><a>Playstation</a>
+              <ul>
+                <li><a href="/category?platform=playstation3">Playstation 3</a></li>
+                <li><a href="/category?platform=playstation4">Playstation 4</a></li>
+                <li><a href="/category?platform=playstation5">Playstation 5</a></li>
+                <li><a href="/category?platform=psvitanpsp">VITA AND PSP</a></li>
+              </ul>
+            </li>
+            <li><a>Xbox</a>
+              <ul>
+                <li><a href="/category?platform=xboxone">XBOX ONE</a></li>
+                <li><a href="/category?platform=xboxseries">XBOX SERIES</a></li>
+                <li><a href="/category?platform=xbox360">XBOX 360</a></li>
+              </ul>
+            </li>
+            <li><a>Nintendo</a>
+              <ul>
+                <li><a href="/category?platform=nswitch">NINTENDO SWITCH</a></li>
+                <li><a href="/category?platform=3ds">3DS</a></li>
+                <li><a href="/category?platform=ds">DS</a></li>
+                <li><a href="/category?platform=gameboy">N64</a></li>
+                <li><a href="/category?platform=gameboy">GAMEBOY</a></li>
+                <li><a href="/category?platform=snes">SNES</a></li>
+                <li><a href="/category?platform=nes">NES</a></li>
+              </ul>
+            </li>
+            @if(isUserLoggedIn()){
+                <li class ="profile-li">
+                    <div class="my-profile">
+                        <a href="/my-account">
+                        <img class="my-profilepic" src="assets/img/profile.png" alt="profile"> 
+                        </a>
+                    </div>
+                    </li> 
+            }
+          </ul>
+          @if(isUserLoggedIn()){
+          <div class="logout-button"><button type="submit" (click)="logout()">Log Out</button> </div>
+          }
+    </nav>
 </header>

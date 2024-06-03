@@ -14,13 +14,13 @@ import { authGuard, loggedInAuthGuard } from './services/auth.guard';
 
 export const routes: Routes = [
 
-    { path:'', component: HomeComponent },
+    { path:'', component: HomeComponent, canActivate: [authGuard]},
     { path:'login', component: LoginComponent, canActivate: [loggedInAuthGuard] },
     { path:'register', component: RegisterComponent, canActivate: [loggedInAuthGuard]},
     { path:'my-account', component: MyAccountComponent, canActivate: [authGuard]},
-    { path:'addgame', component: AddGameComponent },
-    { path:'category', component: CategoryComponent },
-    { path:'gamedetails', component: GamedetailsComponent },
-    { path:'search', component: SearchComponent },
+    { path:'addgame', component: AddGameComponent, canActivate: [authGuard] },
+    { path:'category/:platform', component: CategoryComponent, canActivate: [authGuard] },
+    { path:'gamedetails/:id', component: GamedetailsComponent, canActivate: [authGuard]},
+    { path:'search', component: SearchComponent, canActivate: [authGuard] },
     { path: '**', redirectTo: '' },
 ];

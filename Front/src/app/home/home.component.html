@@ -6,13 +6,12 @@
     <div class="carousel-container">
         <div class="slider-wrapper">
             <button id="prev-slide" class="slide-button material-symbols-rounded"><</button>
-            @for (game of games; track game){
             <div class="game-list"> 
-            <a routerLink = "/gamedetails">
-                <div class="list-content">
+            @for (game of games; track game){
+                <div class="list-content" (click) ="goToGamePage(game.id)">
                     <div class="list-content-top">
                     <div class="list-content-image">
-                        <img [src]="assets/img/stock.jpg">
+                        <img src="assets/img/stock.jpg">
                     </div>
                     <div class="game-info">
                         <div class="game-platform">
@@ -43,9 +42,8 @@
                         <h2>{{game.name}}</h2>
                     </div>
                 </div>
-            </a>
-            </div>
             }
+            </div>
         <button id="next-slide" class="slide-button material-symbols-rounded">></button>
         </div>
         <div class="slider-scrollbar">
@@ -62,45 +60,44 @@
         <div class="slider-wrapper2">
             <button id="prev-slide" class="slide-button material-symbols-rounded"><</button>
             <div class="game-list"> 
-            <a routerLink= "/gamedetails">
-                <div class="list-content">
-                    <div class="list-content-top">
-                    <div class="list-content-image">
-                        <img src="assets/img/stock.jpg">
-                    </div>
-                    <div class="game-info">
-                        <div class="game-platform">
-                            <div class="listings">
-                                <h1>Platforms</h1> 
-                            </div>
-                                <div class="platform">
-                                    <p>Stock Platform 1</p>
-                                </div>
-                                <div class="platform">
-                                    <p>Stock Platform 2</p>
-                                </div>
-                                <p>& More</p>
-                            </div>
-                        <div class="game-genres">
-                            <div class="listings">
-                                <h1>Genres</h1> 
-                            </div>
-                                <div class="platform">
-                                    <p>Stock Genre 1</p>
-                                </div>
-                                <div class="platform">
-                                    <p>Stock Genre 2</p>
-                                </div>
-                                <p>& More</p>
+                @for (game of best; track game){
+                    <div class="list-content" (click) ="goToGamePage(game.id)">
+                        <div class="list-content-top">
+                        <div class="list-content-image">
+                            <img src="assets/img/stock.jpg">
                         </div>
+                        <div class="game-info">
+                            <div class="game-platform">
+                                <div class="listings">
+                                    <h1>Platforms</h1> 
+                                </div>
+                                    @for (platform of game.platforms; track platform){
+                                    <div class="platform">
+                                        <p>{{platform}}</p>
+                                    </div>
+                                    }
+                                    <p>& More</p>
+                                </div>
+                            <div class="game-genres">
+                                <div class="listings">
+                                    <h1>Genres</h1> 
+                                </div>
+                                    @for (genre of game.genres; track genre){
+                                    <div class="platform">
+                                        <p>{{ genre }}</p>
+                                    </div>
+                                    }
+                                    <p>& More</p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="game-name">
+                            <h2>{{game.name}}</h2>
+                        </div>
+
                     </div>
-                    </div>
-                    <div class="game-name">
-                        <h2>Template Game</h2>
-                    </div>
+                }
                 </div>
-            </a>
-            </div>
         <button id="next-slide" class="slide-button material-symbols-rounded">></button>
         </div>
         <div class="slider-scrollbar">
@@ -117,45 +114,45 @@
         <div class="slider-wrapper3">
             <button id="prev-slide" class="slide-button material-symbols-rounded"><</button>
             <div class="game-list"> 
-            <a routerLink = "/gamedetails">
-                <div class="list-content">
-                    <div class="list-content-top">
-                    <div class="list-content-image">
-                        <img src="assets/img/stock.jpg">
-                    </div>
-                    <div class="game-info">
-                        <div class="game-platform">
-                            <div class="listings">
-                                <h1>Platforms</h1> 
-                            </div>
-                                <div class="platform">
-                                    <p>Stock Platform 1</p>
-                                </div>
-                                <div class="platform">
-                                    <p>Stock Platform 2</p>
-                                </div>
-                                <p>& More</p>
-                            </div>
-                        <div class="game-genres">
-                            <div class="listings">
-                                <h1>Genres</h1> 
-                            </div>
-                                <div class="platform">
-                                    <p>Stock Genre 1</p>
-                                </div>
-                                <div class="platform">
-                                    <p>Stock Genre 2</p>
-                                </div>
-                                <p>& More</p>
+                @for (game of worst; track game){
+                    <div class="list-content" (click) ="goToGamePage(game.id)">
+                        <a routerLink = "/gamedetails">
+                        <div class="list-content-top">
+                        <div class="list-content-image">
+                            <img src="assets/img/stock.jpg">
                         </div>
+                        <div class="game-info">
+                            <div class="game-platform">
+                                <div class="listings">
+                                    <h1>Platforms</h1> 
+                                </div>
+                                    @for (platform of game.platforms; track platform){
+                                    <div class="platform">
+                                        <p>{{platform}}</p>
+                                    </div>
+                                    }
+                                    <p>& More</p>
+                                </div>
+                            <div class="game-genres">
+                                <div class="listings">
+                                    <h1>Genres</h1> 
+                                </div>
+                                    @for (genre of game.genres; track genre){
+                                    <div class="platform">
+                                        <p>{{ genre }}</p>
+                                    </div>
+                                    }
+                                    <p>& More</p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="game-name">
+                            <h2>{{game.name}}</h2>
+                        </div>
+                    </a>
                     </div>
-                    </div>
-                    <div class="game-name">
-                        <h2>Template Game</h2>
-                    </div>
+                }
                 </div>
-            </a>
-            </div>
         <button id="next-slide" class="slide-button material-symbols-rounded">></button>
         </div>
         <div class="slider-scrollbar">
