@@ -127,7 +127,7 @@ class HomeController extends AbstractController
                     'name' => $game->getGameName(),
                     'score' => $overallScore,
                     'genres' => $genreNames,
-                    'platforms' => $platformNames,gi
+                    'platforms' => $platformNames,
                     'image' => $game->getGameCover()
                 ];
             }

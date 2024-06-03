@@ -96,7 +96,7 @@ class GameController extends AbstractController
         foreach ($game->getReviews() as $review) {
             $responseData['reviews'][] = [
                 'id' => $review->getId(),
-                'reviewer' => $review->getReviewer(),
+                'reviewer' => $review->getReviewer()->getUserProfile()->getUsername(),
                 'rating' => $review->getRatingGiven(),
                 'comment' => $review->getUserComment()
             ];
